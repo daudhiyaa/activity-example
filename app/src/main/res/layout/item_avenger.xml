@@ -5,49 +5,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    tools:context=".feature.detail.DetailActivity">
+    android:layout_margin="8dp">
     
     <ImageView
-        android:id="@+id/iv_profile"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:id="@+id/iv_avenger_photo"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"/>
-    
+
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_avenger_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        android:text="Iron Man"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_profile"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Hello Daud"/>
+        app:layout_constraintStart_toEndOf="@+id/iv_avenger_photo" />
 
     <TextView
-        android:id="@+id/tv_role"
+        android:id="@+id/tv_avenger_power"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
+        android:text="Tukang Elektronik"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_profile"
-        app:layout_constraintTop_toBottomOf="@id/tv_name"
-        android:text="Software Engineer"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_avenger_name"
+        app:layout_constraintStart_toEndOf="@+id/iv_avenger_photo" />
 
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_profile"
-        tools:text="@tools:sample/lorem/random"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
