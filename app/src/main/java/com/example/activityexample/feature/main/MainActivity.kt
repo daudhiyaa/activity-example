@@ -1,11 +1,14 @@
-package com.example.activityexample
+package com.example.activityexample.feature.main
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
+import com.example.activityexample.R
 import com.example.activityexample.databinding.ActivityMainBinding
+import com.example.activityexample.feature.detail.DetailActivity
+import com.example.activityexample.model.Person
 
 class MainActivity : AppCompatActivity() {
     private val TAG: String? = MainActivity::class.java.name
@@ -18,22 +21,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "onCreate: Activity Created")
         setContentView(binding.root)
-        setClickAction()
+        setBottomNavigation()
     }
 
-    private fun setClickAction() {
-        binding.btnProfile.setOnClickListener {
-            navigateToProfile()
-        }
-    }
-
-    private fun navigateToProfile() {
-        DetailActivity.startActivity(
-            this,
-            R.drawable.ic_profile,
-            "Your Name",
-            "Your Role"
-        )
+    private fun setBottomNavigation() {
+        val navController = findNavController(R.id.main_nav_host)
+        binding.bnvMain.setupWithNavController(navController)
     }
 
     override fun onStart() {

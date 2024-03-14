@@ -13,10 +13,10 @@
         android:theme="@style/Theme.ActivityExample"
         tools:targetApi="31">
         <activity
-            android:name=".DetailActivity"
+            android:name=".feature.detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
