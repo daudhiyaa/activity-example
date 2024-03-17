@@ -11,7 +11,10 @@ import com.example.activityexample.data.model.Avenger
 import com.example.activityexample.databinding.ItemAvengerBinding
 import com.example.activityexample.databinding.ItemAvengerGridBinding
 
-class AvengersAdapter(private val listMode: Int = MODE_LIST) : RecyclerView.Adapter<ViewHolder>() {
+class AvengersAdapter(
+    private val listMode: Int = MODE_LIST,
+    private val listener: OnItemClickedListener<Avenger>,
+) : RecyclerView.Adapter<ViewHolder>() {
 
     companion object {
         const val MODE_LIST = 0
@@ -31,6 +34,10 @@ class AvengersAdapter(private val listMode: Int = MODE_LIST) : RecyclerView.Adap
         }
     )
 
+    fun submitData(data: List<Avenger>) {
+        asyncDataDiffer.submitList(data)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return if (listMode == MODE_GRID) {
             AvengerGridItemViewHolder(
@@ -38,7 +45,8 @@ class AvengersAdapter(private val listMode: Int = MODE_LIST) : RecyclerView.Adap
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                listener
             )
         } else {
             AvengerListItemViewHolder(
@@ -46,7 +54,8 @@ class AvengersAdapter(private val listMode: Int = MODE_LIST) : RecyclerView.Adap
                     LayoutInflater.from(parent.context),
                     parent,
                     false
-                )
+                ),
+                listener
             )
         }
     }
@@ -58,4 +67,8 @@ class AvengersAdapter(private val listMode: Int = MODE_LIST) : RecyclerView.Adap
         (holder as ViewHolderBinder<Avenger>).bind(asyncDataDiffer.currentList[position])
     }
 
+}
+
+interface OnItemClickedListener<T> {
+    fun onItemClicked(item: T)
 }

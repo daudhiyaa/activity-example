@@ -7,7 +7,10 @@ import com.example.activityexample.base.ViewHolderBinder
 import com.example.activityexample.data.model.Avenger
 import com.example.activityexample.databinding.ItemAvengerBinding
 
-class AvengerListItemViewHolder(private val binding: ItemAvengerBinding) : ViewHolder(binding.root),
+class AvengerListItemViewHolder(
+    private val binding: ItemAvengerBinding,
+    private val listener: OnItemClickedListener<Avenger>
+) : ViewHolder(binding.root),
     ViewHolderBinder<Avenger> {
     override fun bind(item: Avenger) {
         item.let {
@@ -15,8 +18,12 @@ class AvengerListItemViewHolder(private val binding: ItemAvengerBinding) : ViewH
                 crossfade(true)
                 error(R.mipmap.ic_launcher)
             }
-            binding.tvAvengerName.text= it.name
-            binding.tvAvengerPower.text= it.power
+            binding.tvAvengerName.text = it.name
+            binding.tvAvengerPower.text = it.power
+
+            itemView.setOnClickListener {
+                listener.onItemClicked(item)
+            }
         }
     }
 }
