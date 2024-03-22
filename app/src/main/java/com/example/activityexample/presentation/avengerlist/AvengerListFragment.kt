@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.activityexample.R
-import com.example.activityexample.data.datasource.AvengersDataSource
-import com.example.activityexample.data.datasource.AvengersDataSourceImpl
 import com.example.activityexample.data.model.Avenger
 import com.example.activityexample.databinding.FragmentAvengerListBinding
 import com.example.activityexample.presentation.avengerdetail.AvengerDetailFragment
@@ -20,10 +19,9 @@ import com.example.activityexample.presentation.avengerlist.adapter.OnItemClicke
 class AvengerListFragment : Fragment() {
     private lateinit var binding: FragmentAvengerListBinding
     private var adapter: AvengersAdapter? = null
-    private var isUsingGridMode: Boolean = true
-    private val dataSource: AvengersDataSource by lazy {
-        AvengersDataSourceImpl()
-    }
+
+    // Init ViewModel
+    private val viewModel: AvengerListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,19 +34,24 @@ class AvengerListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindAvengerList(true)
+        observeGridMode()
         setClickAction()
+    }
+
+    private fun observeGridMode() {
+        viewModel.isUsingGridMode.observe(viewLifecycleOwner) { isUsingGridMode ->
+            bindAvengerList(isUsingGridMode)
+            setButtonText(isUsingGridMode)
+        }
     }
 
     private fun setClickAction() {
         binding.btnChangeListMode.setOnClickListener {
-            isUsingGridMode = !isUsingGridMode
-            setButtonText()
-            bindAvengerList(isUsingGridMode)
+            viewModel.changeListMode()
         }
     }
 
-    private fun setButtonText() {
+    private fun setButtonText(isUsingGridMode: Boolean) {
         binding.btnChangeListMode.text = if (isUsingGridMode) "List Mode" else "Grid Mode"
     }
 
@@ -67,7 +70,7 @@ class AvengerListFragment : Fragment() {
             adapter = this@AvengerListFragment.adapter
             layoutManager = GridLayoutManager(requireContext(), if (isUsingGrid) 2 else 1)
         }
-        adapter?.submitData(dataSource.getAvengerMembers())
+        adapter?.submitData(viewModel.getAvengerList())
     }
 
     private fun navigateToDetail(item: Avenger) {

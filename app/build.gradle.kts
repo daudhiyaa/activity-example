@@ -53,4 +53,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     // COIL (Coroutine Image Loader)
     implementation("io.coil-kt:coil:2.6.0")
+    // livedata ktx
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
 }
